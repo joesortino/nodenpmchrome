@@ -3,13 +3,11 @@ LABEL name="node-chrome"
 
 # Install Chrome for docker
 
-RUN echo 'deb http://dl.google.com/linux/chrome/deb/ stable main' > /etc/apt/sources.list.d/chrome.list
-
-RUN apt-get install libxss1 libappindicator1 libindicator7
-
 RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.de
 
 RUN apt-get install -f
+
+RUN dpkg -i google-chrome*.deb
 
 RUN set -x \
     && apt-get update \
