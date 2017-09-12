@@ -1,6 +1,8 @@
 FROM node:8
 LABEL name="node-chrome"
 
+
+USER root
 # Install Chrome for docker
 
 #============================================
