@@ -1,7 +1,7 @@
 FROM node:8
 LABEL name="node-chrome"
 
-# Install Chrome
+# Install Chrome for docker
 
 RUN echo 'deb http://dl.google.com/linux/chrome/deb/ stable main' > /etc/apt/sources.list.d/chrome.list
 
