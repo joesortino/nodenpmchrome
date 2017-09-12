@@ -14,6 +14,8 @@ RUN set -x \
 
 ENV CHROME_BIN /usr/bin/google-chrome
 
+RUN firejail google-chrome --no-sandbox
+
 # Log versions
 
 RUN set -x \
