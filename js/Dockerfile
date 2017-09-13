@@ -1,10 +1,4 @@
-FROM debian:jessie
-
-RUN apt-get update && apt-get install -y curl xvfb chromium
-
-ADD xvfb-chromium /usr/bin/xvfb-chromium
-RUN ln -s /usr/bin/xvfb-chromium /usr/bin/google-chrome
-RUN ln -s /usr/bin/xvfb-chromium /usr/bin/chromium-browser
+FROM josephsortino/nodenpmchrome
 
 WORKDIR /usr/src/app
 
@@ -13,3 +7,7 @@ RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - \
     && rm -rf /var/lib/apt/lists
 
 CMD npm test
+
+ONBUILD COPY package.json /usr/src/app/package.json
+ONBUILD RUN npm install
+ONBUILD COPY . /usr/src/app
