@@ -1,43 +1,10 @@
-FROM node:8
-LABEL name="node-chrome"
+FROM josephsortino/nodenpmchrome
 
+WORKDIR /usr/src/app
+ENV NODE_VERSION=8.5.0-1
 
-USER root
-# Install Chrome for docker
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - \
+    && apt-get install -y nodejs=${NODE_VERSION}nodesource1~jessie1 \
+    && rm -rf /var/lib/apt/lists
 
-#============================================
-# Google Chrome
-#============================================
-# can specify versions by CHROME_VERSION;
-#  e.g. google-chrome-stable=53.0.2785.101-1
-#       google-chrome-beta=53.0.2785.92-1
-#       google-chrome-unstable=54.0.2840.14-1
-#       latest (equivalent to google-chrome-stable)
-#       google-chrome-beta  (pull latest beta)
-#============================================
-ARG CHROME_VERSION="google-chrome-stable"
-RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
-  && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list \
-  && apt-get update -qqy \
-  && apt-get -qqy install \
-    ${CHROME_VERSION:-google-chrome-stable} \
-  && rm /etc/apt/sources.list.d/google-chrome.list \
-  && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
-
-RUN set -x \
-    && apt-get update \
-    && apt-get install -y \
-        google-chrome-stable
-
-ENV CHROME_BIN /usr/bin/google-chrome
-
-RUN chown root:$USER /opt/google/chrome/chrome-sandbox
-
-RUN chmod 4755 /opt/google/chrome/chrome-sandbox
-
-# Log versions
-
-RUN set -x \
-    && node -v \
-    && npm -v \
-    && google-chrome --version
+CMD npm test
