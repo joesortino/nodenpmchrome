@@ -3,8 +3,8 @@ FROM josephsortino/nodenpmchrome
 RUN apt-get update && apt-get install -y curl xvfb chromium
 
 ADD xvfb-chromium /usr/bin/xvfb-chromium
-RUN ln -s /usr/bin/xvfb-chromium /usr/bin/google-chrome
-RUN ln -s /usr/bin/xvfb-chromium /usr/bin/chromium-browser
+RUN ln -sv /usr/bin/xvfb-chromium /usr/bin/google-chrome
+RUN ln -sv /usr/bin/xvfb-chromium /usr/bin/chromium-browser
 
 WORKDIR /usr/src/app
 ENV NODE_VERSION=8.4.0-1
